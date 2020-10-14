@@ -8,11 +8,11 @@ var sampleDataSet = {
 var individualID = "945"
 // Filters dataset to ONLY the data for the chosen participant's bellybutton
 var barChartFilter = sampleDataSet.samples.filter(function (d) {return d.id === individualID});
-// Gets top 10 sample_values from filter (JSON object is already sorted descending by sample_values)
+// Gets top 10 sample_values from filter (JSON object is already sorted by sample_values, reverse to get largest bars on top)
 var sample_values = barChartFilter[0].sample_values.slice(0,10).reverse();
-// Gets top 10 otu_ids from filter (JSON object is already sorted descending by sample_values)
+// Gets top 10 otu_ids from filter (JSON object is already sorted by sample_values, reverse to get largest bars on top)
 var otu_ids = barChartFilter[0].otu_ids.slice(0,10).reverse();
-// Gets top 10 otu_labels from filter (JSON object is already sorted descending by sample_values)
+// Gets top 10 otu_labels from filter (JSON object is already sorted by sample_values, reverse to get largest bars on top)
 var otu_labels = barChartFilter[0].otu_labels.slice(0,10).reverse();
 // Establish the data and formatting for our bar chart
 var trace1 = {
@@ -24,7 +24,7 @@ var trace1 = {
   };
 
   var layout = {
-      title: `Frequency of OTU for Participant ${individualID}`,
+      title: `Frequency of OTU for Participant #${individualID}`,
       yaxis: {
           title: "OTU ID",
           type: "category",
@@ -36,9 +36,32 @@ var trace1 = {
        }
     };
 
-  var data = [trace1];
-// Plot chart to index.html
-Plotly.newPlot("bar", data, layout);
+  var data1 = [trace1];
+// Plot bar chart to index.html
+Plotly.newPlot("bar", data1, layout);
+
+// Establish the data and formatting for our bubble chart
+var trace2 = {
+    x: otu_ids,
+    y: sample_values,
+    text: otu_labels,
+    mode: "markers",
+    marker: {
+        size: sample_values,
+        color: otu_ids,
+    }
+}
+var layout2 = {
+    title: `Bubble Distribution of OTU for Participant #${individualID}`,
+    height: 600,
+    width: 1100,
+    xaxis: {
+        title: "OTU ID"
+    }
+}
+    var data2 = [trace2];
+// Plot bubble chart to index.html
+Plotly.newPlot("bubble", data2, layout2)
 
 // Filters dataset to ONLY the data for the chosen participant's bellybutton
 var demoMetaDataFilter = sampleDataSet.metadata.filter(function (d) {return String(d.id) === individualID});
