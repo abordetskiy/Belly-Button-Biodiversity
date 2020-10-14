@@ -10,14 +10,11 @@ var individualID = "945"
 var barChartFilter = sampleDataSet.samples.filter(function (d) {return d.id === individualID});
 // Gets top 10 sample_values from filter (JSON object is already sorted descending by sample_values)
 var sample_values = barChartFilter[0].sample_values.slice(0,10).reverse();
-console.log(sample_values);
 // Gets top 10 otu_ids from filter (JSON object is already sorted descending by sample_values)
 var otu_ids = barChartFilter[0].otu_ids.slice(0,10).reverse();
-console.log(otu_ids);
 // Gets top 10 otu_labels from filter (JSON object is already sorted descending by sample_values)
 var otu_labels = barChartFilter[0].otu_labels.slice(0,10).reverse();
-console.log(otu_labels);
-
+// Establish the data and formatting for our bar chart
 var trace1 = {
     type: "bar",
     x: sample_values,
@@ -40,7 +37,17 @@ var trace1 = {
     };
 
   var data = [trace1];
+// Plot chart to index.html
+Plotly.newPlot("bar", data, layout);
 
-  
-
-  Plotly.newPlot("bar", data, layout);
+// Filters dataset to ONLY the data for the chosen participant's bellybutton
+var demoMetaDataFilter = sampleDataSet.metadata.filter(function (d) {return String(d.id) === individualID});
+console.log(demoMetaDataFilter)
+// Create variable to reference Demographic Info tag in index.html
+var demoMetaData = d3.select("#sample-metadata");
+// Clears any prior info in tag 
+demoMetaData.html("");
+// Loops through each line of metadata for chosen participant's bellybutton and puts key/value in appended div tag
+Object.entries(demoMetaDataFilter[0]).forEach(([key,value]) => {
+    demoMetaData.append("div").text(`${key} : ${value}`)
+   });
