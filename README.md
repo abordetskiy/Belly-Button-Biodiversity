@@ -1,6 +1,6 @@
 # Welcome to the Belly Button Biodiversity Dashboard!
 
-## Please access the Site via this link: https://abordetskiy.github.io/Belly-Button-Biodiversity/index.html
+## Please access the Site via this link: https://abordetskiy.github.io/Belly-Button-Biodiversity/
 
 ### Simply select your Test Subject ID from the dropdown and watch all the charts update before your eyes.
 
