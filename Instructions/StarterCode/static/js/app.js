@@ -93,6 +93,7 @@ function optionChanged() {
             value: washFrequency,
             gauge: {
                 axis: { range: [0, 9],
+                        tickvals: [0,1,2,3,4,5,6,7,8,9],
                         tickwidth: 2, 
                         tickcolor: "black" },
                 steps: [
