@@ -74,7 +74,8 @@ function optionChanged() {
             title: "OTU ID"
         }
     };
-        var bubbleData = [bubbleTrace];
+    
+    var bubbleData = [bubbleTrace];
     // Plot bubble chart to index.html
     Plotly.newPlot("bubble", bubbleData, bubbleLayout);
 
