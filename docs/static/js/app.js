@@ -17,6 +17,7 @@ dropdownSelect.on("change", optionChanged());
 // Initial run of function to load first charts at load/refresh
 var individualID = dropdownSelect.property("value");
 optionChanged();
+
 // Function that plots all charts when called by change in dropdown selection
 function optionChanged() {
     // Pulls participant ID from dropdown
@@ -29,6 +30,7 @@ function optionChanged() {
     var otu_ids = barChartFilter[0].otu_ids.slice(0,10).reverse();
     // Gets top 10 otu_labels from filter (JSON object is already sorted by sample_values, reverse to get largest bars on top)
     var otu_labels = barChartFilter[0].otu_labels.slice(0,10).reverse();
+
     // Establish the data and formatting for our bar chart
     var barTrace = {
         type: "bar",
@@ -74,7 +76,7 @@ function optionChanged() {
             title: "OTU ID"
         }
     };
-    
+
     var bubbleData = [bubbleTrace];
     // Plot bubble chart to index.html
     Plotly.newPlot("bubble", bubbleData, bubbleLayout);
@@ -89,6 +91,7 @@ function optionChanged() {
     Object.entries(demoMetaDataFilter[0]).forEach(([key,value]) => {
         demoMetaData.append("div").text(`${key} : ${value}`)
     });
+    
     // Pulls wash frequency variable for chosen participant's bellybutton metadata
     var washFrequency = demoMetaDataFilter[0].wfreq;
     // Establish the data and formatting for our gague chart

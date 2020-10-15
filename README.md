@@ -8,7 +8,6 @@
 
 *Note: attempts to call data from samples.json resulted in a CORS error. Rather than permantently open a port on my local machine, I've opted to include the dataset within app.js*
 
-###### FINAL TEST PENDING #######
 
 
 
