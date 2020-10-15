@@ -15,9 +15,8 @@ var dropdownOptions = dropdownSelect.selectAll("option")
 dropdownSelect.on("change", optionChanged());
 // Initial run of function to load first charts at load/refresh
 var individualID = dropdownSelect.property("value")
-console.log(typeof individualID)
 optionChanged()
-
+// Function that plots all charts when called by change in dropdown selection
 function optionChanged() {
     var individualID = dropdownSelect.property("value")
     // Filters dataset to ONLY the data for the chosen participant's bellybutton
@@ -68,7 +67,7 @@ function optionChanged() {
     var bubbleLayout = {
         title: `Bubble Distribution of OTU for Participant #${individualID}`,
         height: 600,
-        width: 1100,
+        width: 1250,
         xaxis: {
             title: "OTU ID"
         }
@@ -87,5 +86,35 @@ function optionChanged() {
     Object.entries(demoMetaDataFilter[0]).forEach(([key,value]) => {
         demoMetaData.append("div").text(`${key} : ${value}`)
     });
+    // Pulls wash frequency variable for chosen participant's bellybutton metadata
+    var washFrequency = demoMetaDataFilter[0].wfreq;
+    // Establish the data and formatting for our gague chart
+    var gaugeTrace =  {
+            value: washFrequency,
+            gauge: {
+                axis: { range: [0, 9],
+                        tickwidth: 2, 
+                        tickcolor: "black" },
+                steps: [
+                  { range: [0, 1], color: "red" },
+                  { range: [1, 2], color: "red" },
+                  { range: [2, 3], color: "red" },
+                  { range: [3, 4], color: "yellow" },
+                  { range: [4, 5], color: "yellow" },
+                  { range: [5, 6], color: "yellow" },
+                  { range: [6, 7], color: "lightgreen" },
+                  { range: [7, 8], color: "lightgreen" },
+                  { range: [8, 9], color: "lightgreen" }
+                ]},
+            title: { text: `Belly Button Wash Frequency of OTU <br /> for Participant #${individualID} <br /> (Scrubs per Week)` },
+            type: "indicator",
+            mode: "gauge+number"
+        };
+    
+    var gaugeLayout = { width: 500, height: 500, margin: { t: 0, b: 0 } };
+
+    var gaugeData = [gaugeTrace]
+    // Plot gauge chart to index.html
+    Plotly.newPlot("gauge", gaugeData, gaugeLayout);
 };
 
