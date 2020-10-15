@@ -11,11 +11,14 @@ var dropdownOptions = dropdownSelect.selectAll("option")
 .append("option")
 .text(d => {return d})
 
+// Establish trigger event to update page as a new participant ID is selected from the dropdown
+dropdownSelect.on("change", optionChanged());
 // Initial run of function to load first charts at load/refresh
 var individualID = dropdownSelect.property("value")
-generateCharts()
+console.log(typeof individualID)
+optionChanged()
 
-function generateCharts() {
+function optionChanged() {
     var individualID = dropdownSelect.property("value")
     // Filters dataset to ONLY the data for the chosen participant's bellybutton
     var barChartFilter = sampleDataSet.samples.filter(function (d) {return d.id === individualID});
@@ -86,4 +89,3 @@ function generateCharts() {
     });
 };
 
-dropdownSelect.on("change", generateCharts());
